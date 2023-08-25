@@ -14,7 +14,8 @@ def main(inputMessage):
     print(asyncio.run(messageReservation(inputMessage)))
   elif inputMessage.startswith("와 날씨 "):
     print(messageWeather(inputMessage))
-  
+  elif inputMessage.startswith("와 마법의 소라고동이시여, "):
+    print(messageMagicConch(inputMessage))
 
 def get_message(strMessage):
   return strMessage.lower()
@@ -49,7 +50,7 @@ async def messageReservation(inputMessage):
     return (message + '\n') * (repetitions - 1) + message
   except (IndexError, ValueError):
     return "올바르지 않은 입력이에요. '와 예약 [메시지] [분] [반복횟수]' 형식으로 입력해주세요."
-  
+
 def messageWeather(inputMessage):
   area = inputMessage.split()[1]
 
@@ -69,6 +70,16 @@ def messageWeather(inputMessage):
       "현재 온도는 " + temp + "이며 " + "체감 온도는 " + body_temp + "입니다.",
       "최고 온도는 " + max_temp + "이며 " + "최저 온도는 " + min_temp + "입니다."
     ]
-    )
+  )
+
+def messageMagicConch(inputMessage):
+  question = inputMessage.replace("와 마법의 소라고동이시여, ", "").strip()
+  
+  if not question:
+      return "말 해."
+  
+  return random.choice(["해", "아마", "안 돼."])
+
+
 if __name__ == "__main__":
   main(sys.argv[1])
