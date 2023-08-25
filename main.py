@@ -3,12 +3,14 @@ import random
 import asyncio
 
 def main(inputMessage):
-  if len(inputMessage) >= 5:
-    print(get_message(inputMessage))
-  elif inputMessage.startswith("와 랜덤 "):
+  if inputMessage.startswith("와 랜덤 "):
     print(messageRandomNumber(inputMessage))
   elif inputMessage == "와 니가":
     print(messageYour(inputMessage))
+  elif inputMessage.startswith("와 예약 "):
+    print(asyncio.run(messageReservation(inputMessage)))
+  elif len(inputMessage) >= 5:
+    print(get_message(inputMessage))
 
 def get_message(strMessage):
   return strMessage.lower()
@@ -27,6 +29,22 @@ def messageYour():
       "뭘 할 수 있는데"
     ]
   )
+
+async def messageReservation(inputMessage):
+  try:
+    parts = inputMessage.split()
+    message = parts[2]
+    delay = int(parts[3])
+    repetitions = int(parts[4])
+
+    if delay > 10 or repetitions > 10:
+      return "시간과 반복 값은 10 이하의 값만 사용할 수 있어요."
+
+    await asyncio.sleep(delay * 60)
+
+    return (message + '\n') * (repetitions - 1) + message
+  except (IndexError, ValueError):
+    return "올바르지 않은 입력이에요. '와 예약 [메시지] [분] [반복횟수]' 형식으로 입력해주세요."
 
 if __name__ == "__main__":
   main(sys.argv[1])
