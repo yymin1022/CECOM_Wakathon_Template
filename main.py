@@ -52,7 +52,7 @@ async def messageReservation(inputMessage):
     return "올바르지 않은 입력이에요. '와 예약 [메시지] [분] [반복횟수]' 형식으로 입력해주세요."
 
 def messageWeather(inputMessage):
-  area = inputMessage.split()[1]
+  area = inputMessage.split()[2]
 
   webpage = req.urlopen('https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=' + urllib.parse.quote(area + ' 날씨'))
 
